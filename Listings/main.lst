@@ -1,0 +1,134 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              07/31/2020 15:12:29 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\keilc51\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          sbit light=P2^1;
+   6          sbit key1=P3^1;
+   7          sbit key2=P3^2;
+   8          
+   9          sbit DIN=P3^4;
+  10          sbit CS=P3^5;
+  11          sbit DCLK=P3^6;
+  12          sbit DOUT=P3^7;
+  13          /*延时ms函数*/
+  14          void delayms(uint z)
+  15          {
+  16   1              uint i,j;
+  17   1              for(i=z;i>0;i--)
+  18   1                      for(j=110;j>0;j--);
+  19   1      }
+  20          /*灯的开关*/
+  21          void switchLight(uchar i)
+  22          {
+  23   1              if(i==1)
+  24   1                      light=0;
+  25   1              if(i==2)
+  26   1                      light=1;
+  27   1      }
+  28          /*按键控制小灯开关*/
+  29          void keyControl(void)
+  30          {
+  31   1              if(key1==0)
+  32   1              {
+  33   2                      delayms(10);
+  34   2                      if(key1==0)
+  35   2                      {
+  36   3                              switchLight(1);
+  37   3                      }
+  38   2                      while(!key1);
+  39   2              }
+  40   1              if(key2==0)
+  41   1              {
+  42   2                      delayms(10);
+  43   2                      if(key2==0)
+  44   2                      {
+  45   3                              switchLight(2);
+  46   3                      }
+  47   2                      while(!key2);
+  48   2              }
+  49   1      }
+  50          /*光敏传感器控制灯开关*/
+  51          
+  52          //AD写入操作
+  53          void adWrite(uchar dat)
+  54          {
+C51 COMPILER V9.60.0.0   MAIN                                                              07/31/2020 15:12:29 PAGE 2   
+
+  55   1              uint i;
+  56   1              CS=0;
+  57   1              DCLK=0;
+  58   1              for(i=0;i<8;i++)
+  59   1              {
+  60   2                      DIN=dat;
+  61   2                      dat<<=1;
+  62   2                      DCLK=1;
+  63   2                      
+  64   2                      DCLK=0;
+  65   2              }
+  66   1      }
+  67          //AD读取数据操作
+  68          uint adRead()
+  69          {
+  70   1              uint i,dat=0;
+  71   1              CS=0;
+  72   1              for(i=0;i<12;i++)
+  73   1              {
+  74   2                      DCLK=0;
+  75   2                      dat<<=1;
+  76   2                      dat|=DOUT;
+  77   2                      DCLK=1;
+  78   2              }
+  79   1              return dat;
+  80   1      }
+  81          //命令转换操作
+  82          uint adReadData(uchar dat)              //光敏电阻为 0xc4
+  83          {
+  84   1              uint i,AD_value;
+  85   1              DCLK=0;
+  86   1              CS=0;
+  87   1              adWrite(dat);
+  88   1              for(i=6;i>0;i--);
+  89   1              DCLK=1;
+  90   1              _nop_();
+  91   1              _nop_();
+  92   1              DCLK=0;
+  93   1              _nop_();
+  94   1              _nop_();
+  95   1              AD_value=adRead();
+  96   1              CS=1;
+  97   1              return AD_value;
+  98   1      }
+  99          //封装开关
+ 100          void adSwitch(uchar dat)
+ 101          {
+ 102   1              if(adReadData(dat)<200)
+ 103   1                      switchLight(1);
+ 104   1              else
+ 105   1                      switchLight(2);
+ 106   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    216    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.60.0.0   MAIN                                                              07/31/2020 15:12:29 PAGE 3   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
