@@ -1,5 +1,6 @@
 #include <reg52.h>
 #include <intrins.h>
+#include <stdio.h>
 #define uchar unsigned char
 #define uint unsigned int
 sbit light=P2^1;
@@ -104,3 +105,42 @@ void adSwitch(uchar dat)
 	else
 		switchLight(2);
 }
+
+/*WIFI控制小灯的亮灭*/
+//初始化
+void wifiInit()
+{
+	TMOD=0x20;		//波特率9600
+	TL1=0xfd;
+	TH1=0xfd;
+	TR1=1;
+	SM0=0;
+	SM1=1;
+	REN=1;
+}
+//设置WiFi打开端口号
+void wifiConfig()
+{
+	printf("AT+CWMODE+1");
+	delayms(1000);
+	printf("AT+RST");
+	delayms(1000);
+	printf("AT+CWJAP=\"XXX\",\"XXX\"");
+	delayms(1000);
+	printf("AT+CIPMUX=1");
+	delayms(1000);
+	printf("AT+CIPSERVER=1,8080");
+	delayms(1000);
+	//to do液晶显示设置成功
+}
+//封装开关
+void wifiSwitch()
+{
+	uchar a;
+	a=SBUF;
+	if(a=='1')
+		switchLight(1);
+	if(a=='2')
+		switchLight(2);
+}
+/*液晶实时状态回显*/
