@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MAIN                                                              08/04/2020 16:54:56 PAGE 1   
+C51 COMPILER V9.60.0.0   MAIN                                                              08/05/2020 10:56:45 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
@@ -13,159 +13,282 @@ line level    source
    3          #include <stdio.h>
    4          #define uchar unsigned char
    5          #define uint unsigned int
-   6          sbit light=P2^1;
-   7          sbit key1=P3^1;
-   8          sbit key2=P3^2;
-   9          
-  10          sbit DIN=P3^4;
-  11          sbit CS=P3^5;
-  12          sbit DCLK=P3^6;
-  13          sbit DOUT=P3^7;
-  14          /*延时ms函数*/
-  15          void delayms(uint z)
-  16          {
-  17   1              uint i,j;
-  18   1              for(i=z;i>0;i--)
-  19   1                      for(j=110;j>0;j--);
-  20   1      }
-  21          /*灯的开关*/
-  22          void switchLight(uchar i)
-  23          {
-  24   1              if(i==1)
-  25   1                      light=0;
-  26   1              if(i==2)
-  27   1                      light=1;
-  28   1      }
-  29          /*按键控制小灯开关*/
-  30          void keyControl(void)
-  31          {
-  32   1              if(key1==0)
-  33   1              {
-  34   2                      delayms(10);
-  35   2                      if(key1==0)
-  36   2                      {
-  37   3                              switchLight(1);
-  38   3                      }
-  39   2                      while(!key1);
-  40   2              }
-  41   1              if(key2==0)
-  42   1              {
-  43   2                      delayms(10);
-  44   2                      if(key2==0)
-  45   2                      {
-  46   3                              switchLight(2);
-  47   3                      }
-  48   2                      while(!key2);
-  49   2              }
-  50   1      }
-  51          /*光敏传感器控制灯开关*/
-  52          
-  53          //AD写入操作
-  54          void adWrite(uchar dat)
-C51 COMPILER V9.60.0.0   MAIN                                                              08/04/2020 16:54:56 PAGE 2   
+   6          sbit mode=P2^0;                 //mode=0为按键和WiFi控制  mode=1为传感器控制
+   7          sbit S1=P1^7;
+   8          sbit S2=P1^3;
+   9          sbit light=P2^1;
+  10          sbit key1=P3^2;    //按键3
+  11          sbit key2=P3^3;          //按键4                
+  12          
+  13          sbit DIN=P3^4;
+  14          sbit CS=P3^5;
+  15          sbit DCLK=P3^6;
+  16          sbit DOUT=P3^7;
+  17          
+  18          sbit EN=P2^7;
+  19          sbit RS=P2^6;
+  20          sbit lcdWR=P2^5;
+  21          
+  22          uchar code table1[]="loading...";
+  23          uchar code table2[]="OK";
+  24          uchar code table3[]="status";
+  25          uchar code table4[]="Light";
+  26          uchar code table5[]="low";
+  27          uchar code table6[]="high";
+  28          uchar code table7[]="on";
+  29          uchar code table8[]="off";
+  30          void lcdWriteCom(uchar dat);
+  31          void lcdString(uchar *str,uint length);
+  32          /*延时ms函数*/
+  33          void delayms(uint z)
+  34          {
+  35   1              uint i,j;
+  36   1              for(i=z;i>0;i--)
+  37   1                      for(j=110;j>0;j--);
+  38   1      }
+  39          /*灯的开关*/
+  40          void switchLight(uchar i)
+  41          {
+  42   1              if(i==1)
+  43   1                      light=0;
+  44   1              if(i==2)
+  45   1                      light=1;
+  46   1      }
+  47          /*按键控制小灯开关*/
+  48          void keyControl(void)
+  49          {
+  50   1              if(key1==0)
+  51   1              {
+  52   2                      delayms(10);
+  53   2                      if(key1==0)
+  54   2                      {
+C51 COMPILER V9.60.0.0   MAIN                                                              08/05/2020 10:56:45 PAGE 2   
 
-  55          {
-  56   1              uint i;
-  57   1              CS=0;
-  58   1              DCLK=0;
-  59   1              for(i=0;i<8;i++)
+  55   3                              switchLight(1);
+  56   3                      }
+  57   2                      while(!key1);
+  58   2              }
+  59   1              if(key2==0)
   60   1              {
-  61   2                      DIN=dat;
-  62   2                      dat<<=1;
-  63   2                      DCLK=1;
-  64   2                      
-  65   2                      DCLK=0;
-  66   2              }
-  67   1      }
-  68          //AD读取数据操作
-  69          uint adRead()
-  70          {
-  71   1              uint i,dat=0;
-  72   1              CS=0;
-  73   1              for(i=0;i<12;i++)
-  74   1              {
-  75   2                      DCLK=0;
-  76   2                      dat<<=1;
-  77   2                      dat|=DOUT;
-  78   2                      DCLK=1;
-  79   2              }
-  80   1              return dat;
-  81   1      }
-  82          //命令转换操作
-  83          uint adReadData(uchar dat)              //光敏电阻为 0xc4
-  84          {
-  85   1              uint i,AD_value;
-  86   1              DCLK=0;
-  87   1              CS=0;
-  88   1              adWrite(dat);
-  89   1              for(i=6;i>0;i--);
-  90   1              DCLK=1;
-  91   1              _nop_();
-  92   1              _nop_();
-  93   1              DCLK=0;
-  94   1              _nop_();
-  95   1              _nop_();
-  96   1              AD_value=adRead();
-  97   1              CS=1;
-  98   1              return AD_value;
+  61   2                      delayms(10);
+  62   2                      if(key2==0)
+  63   2                      {
+  64   3                              switchLight(2);
+  65   3                      }
+  66   2                      while(!key2);
+  67   2              }
+  68   1      }
+  69          /*光敏传感器控制灯开关*/
+  70          
+  71          //AD写入操作
+  72          void adWrite(uchar dat)
+  73          {
+  74   1              uint i;
+  75   1              CS=0;
+  76   1              DCLK=0;
+  77   1              for(i=0;i<8;i++)
+  78   1              {
+  79   2                      DIN=dat;
+  80   2                      dat<<=1;
+  81   2                      DCLK=1;
+  82   2                      
+  83   2                      DCLK=0;
+  84   2              }
+  85   1      }
+  86          //AD读取数据操作
+  87          uint adRead()
+  88          {
+  89   1              uint i,dat=0;
+  90   1              CS=0;
+  91   1              for(i=0;i<12;i++)
+  92   1              {
+  93   2                      DCLK=0;
+  94   2                      dat<<=1;
+  95   2                      dat|=DOUT;
+  96   2                      DCLK=1;
+  97   2              }
+  98   1              return dat;
   99   1      }
- 100          //封装开关
- 101          void adSwitch(uchar dat)
+ 100          //命令转换操作
+ 101          uint adReadData()               //光敏电阻为 0xc4
  102          {
- 103   1              if(adReadData(dat)<200)
- 104   1                      switchLight(1);
- 105   1              else
- 106   1                      switchLight(2);
- 107   1      }
- 108          
- 109          /*WIFI控制小灯的亮灭*/
- 110          //初始化
- 111          void wifiInit()
- 112          {
- 113   1              TMOD=0x20;              //波特率9600
- 114   1              TL1=0xfd;
- 115   1              TH1=0xfd;
- 116   1              TR1=1;
-C51 COMPILER V9.60.0.0   MAIN                                                              08/04/2020 16:54:56 PAGE 3   
+ 103   1              uint i,AD_value;
+ 104   1              DCLK=0;
+ 105   1              CS=0;
+ 106   1              adWrite(0xc4);
+ 107   1              for(i=6;i>0;i--);
+ 108   1              DCLK=1;
+ 109   1              _nop_();
+ 110   1              _nop_();
+ 111   1              DCLK=0;
+ 112   1              _nop_();
+ 113   1              _nop_();
+ 114   1              AD_value=adRead();
+ 115   1              CS=1;
+ 116   1              return AD_value;
+C51 COMPILER V9.60.0.0   MAIN                                                              08/05/2020 10:56:45 PAGE 3   
 
- 117   1              SM0=0;
- 118   1              SM1=1;
- 119   1              REN=1;
- 120   1      }
- 121          //设置WiFi打开端口号
- 122          void wifiConfig()
- 123          {
- 124   1              printf("AT+CWMODE+1");
- 125   1              delayms(1000);
- 126   1              printf("AT+RST");
- 127   1              delayms(1000);
- 128   1              printf("AT+CWJAP=\"XXX\",\"XXX\"");
- 129   1              delayms(1000);
- 130   1              printf("AT+CIPMUX=1");
- 131   1              delayms(1000);
- 132   1              printf("AT+CIPSERVER=1,8080");
- 133   1              delayms(1000);
- 134   1              //to do液晶显示设置成功
- 135   1      }
- 136          //封装开关
- 137          void wifiSwitch()
- 138          {
- 139   1              uchar a;
- 140   1              a=SBUF;
- 141   1              if(a=='1')
- 142   1                      switchLight(1);
- 143   1              if(a=='2')
- 144   1                      switchLight(2);
- 145   1      }
- 146          /*液晶实时状态回显*/
+ 117   1      }
+ 118          //封装开关
+ 119          void adSwitch()
+ 120          {
+ 121   1              if(adReadData()<200)
+ 122   1                      switchLight(1);
+ 123   1              else
+ 124   1                      switchLight(2);
+ 125   1      }
+ 126          
+ 127          /*WIFI控制小灯的亮灭*/
+ 128          //初始化
+ 129          void wifiInit()
+ 130          {
+ 131   1              TMOD=0x20;              //波特率9600
+ 132   1              TL1=0xfd;
+ 133   1              TH1=0xfd;
+ 134   1              TR1=1;
+ 135   1              SM0=0;
+ 136   1              SM1=1;
+ 137   1              REN=1;
+ 138   1      }
+ 139          //设置WiFi打开端口号
+ 140          void wifiConfig()
+ 141          {
+ 142   1              //液晶显示正在设置
+ 143   1              lcdWriteCom(0x80+0x02);
+ 144   1              lcdString(table1,10);
+ 145   1              
+ 146   1              printf("AT+CWMODE+1");
+ 147   1              delayms(1000);
+ 148   1              printf("AT+RST");
+ 149   1              delayms(1000);
+ 150   1              printf("AT+CWJAP=\"XXX\",\"XXX\"");             //此处为要连接的WIFI名称和密码
+ 151   1              delayms(1000);
+ 152   1              printf("AT+CIPMUX=1");
+ 153   1              delayms(1000);
+ 154   1              printf("AT+CIPSERVER=1,8080");
+ 155   1              delayms(1000);
+ 156   1              //液晶显示设置成功
+ 157   1              lcdWriteCom(0x01);
+ 158   1              lcdWriteCom(0x80);
+ 159   1              lcdString(table2,2);
+ 160   1      }
+ 161          //封装开关
+ 162          void wifiSwitch()
+ 163          {
+ 164   1              uchar a;
+ 165   1              a=SBUF;
+ 166   1              if(a=='1')
+ 167   1                      switchLight(1);
+ 168   1              if(a=='2')
+ 169   1                      switchLight(2);
+ 170   1      }
+ 171          /*液晶实时状态回显*/
+ 172          //液晶写命令
+ 173          void lcdWriteCom(uchar dat)
+ 174          {
+ 175   1              RS=0;
+ 176   1              lcdWR=0;
+ 177   1              P0=dat;
+ 178   1              delayms(5);
+C51 COMPILER V9.60.0.0   MAIN                                                              08/05/2020 10:56:45 PAGE 4   
+
+ 179   1              EN=1;
+ 180   1              delayms(5);
+ 181   1              EN=0;
+ 182   1      }
+ 183          //液晶写数据
+ 184          void lcdWriteData(uchar dat)
+ 185          {
+ 186   1              RS=1;
+ 187   1              lcdWR=0;
+ 188   1              P0=dat;
+ 189   1              delayms(5);
+ 190   1              EN=1;
+ 191   1              delayms(5);
+ 192   1              EN=0;
+ 193   1      }
+ 194          //初始化液晶
+ 195          void lcdInit()
+ 196          {
+ 197   1              lcdWriteCom(0x38);
+ 198   1              lcdWriteCom(0x0c);
+ 199   1              lcdWriteCom(0x06);
+ 200   1              lcdWriteCom(0x01);
+ 201   1      }
+ 202          //字符串显示函数
+ 203          void lcdString(uchar *str,uint length)
+ 204          {
+ 205   1              uint i;
+ 206   1              for(i=0;i<length;i++)
+ 207   1              {
+ 208   2                      lcdWriteData(str[i]);
+ 209   2              }
+ 210   1      }
+ 211          //光强显示
+ 212          void lcdLight()
+ 213          {
+ 214   1              lcdWriteCom(0x80+0x40);
+ 215   1              lcdString(table4,5);
+ 216   1              lcdWriteCom(0x80+0x46);
+ 217   1              if(adReadData()<200)
+ 218   1                      lcdString(table5,3);
+ 219   1              else
+ 220   1                      lcdString(table6,4);
+ 221   1      }
+ 222          //液晶显示灯的状态变化
+ 223          void lcdStatus()
+ 224          {
+ 225   1              lcdWriteCom(0x80);
+ 226   1              if(light==0)
+ 227   1                      lcdString(table7,2);
+ 228   1              if(light==1)
+ 229   1                      lcdString(table8,3);
+ 230   1      }
+ 231          /*模式设置*/
+ 232          void modeConfig()
+ 233          {
+ 234   1              if(S1==0)
+ 235   1              {
+ 236   2                      delayms(10);
+ 237   2                      if(S1==0)
+ 238   2                      {
+ 239   3                              mode=~mode;
+ 240   3                      }
+C51 COMPILER V9.60.0.0   MAIN                                                              08/05/2020 10:56:45 PAGE 5   
+
+ 241   2                      while(!S1);
+ 242   2              }
+ 243   1              if(mode==1)
+ 244   1              {
+ 245   2                      adSwitch();
+ 246   2              }
+ 247   1      }
+ 248          /*主函数*/
+ 249          void main()
+ 250          {
+ 251   1              wifiInit();
+ 252   1              lcdInit();
+ 253   1              wifiConfig();
+ 254   1              mode=0;
+ 255   1              S1=1;
+ 256   1              S2=0;
+ 257   1              while(1)
+ 258   1              {
+ 259   2                      lcdStatus();
+ 260   2                      lcdLight();
+ 261   2                      keyControl();
+ 262   2                      wifiSwitch();
+ 263   2                      modeConfig();
+ 264   2              }
+ 265   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    321    ----
-   CONSTANT SIZE    =     72    ----
+   CODE SIZE        =    633    ----
+   CONSTANT SIZE    =    115    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =   ----       7
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
