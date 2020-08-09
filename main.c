@@ -23,9 +23,9 @@ uchar code table1[]="loading...";
 uchar code table2[]="OK";
 uchar code table3[]="status";
 uchar code table4[]="Light";
-uchar code table5[]="low";
+uchar code table5[]="low ";
 uchar code table6[]="high";
-uchar code table7[]="on";
+uchar code table7[]="on ";
 uchar code table8[]="off";
 void lcdWriteCom(uchar dat);
 void lcdString(uchar *str,uint length);
@@ -76,11 +76,11 @@ void adWrite(uchar dat)
 	DCLK=0;
 	for(i=0;i<8;i++)
 	{
-		DIN=dat;
+		DIN=dat>>7;
 		dat<<=1;
-		DCLK=1;
-		
 		DCLK=0;
+		
+		DCLK=1;
 	}
 }
 //AD读取数据操作
@@ -88,22 +88,25 @@ uint adRead()
 {
 	uint i,dat=0;
 	CS=0;
+	DCLK=0;
 	for(i=0;i<12;i++)
 	{
-		DCLK=0;
+		
 		dat<<=1;
-		dat|=DOUT;
 		DCLK=1;
+		DCLK=0;
+		dat|=DOUT;
+		
 	}
 	return dat;
 }
 //命令转换操作
-uint adReadData()		//光敏电阻为 0xc4
+uint adReadData()		//光敏电阻为 0xa4
 {
 	uint i,AD_value;
 	DCLK=0;
 	CS=0;
-	adWrite(0xc4);
+	adWrite(0xa4);
 	for(i=6;i>0;i--);
 	DCLK=1;
 	_nop_();
@@ -118,10 +121,16 @@ uint adReadData()		//光敏电阻为 0xc4
 //封装开关
 void adSwitch()
 {
-	if(adReadData()<200)
+	if(adReadData()<150)
+	{
 		switchLight(1);
+		delayms(10);
+	}
 	else
+	{
 		switchLight(2);
+		delayms(10);
+	}
 }
 
 /*WIFI控制小灯的亮灭*/
@@ -135,6 +144,8 @@ void wifiInit()
 	SM0=0;
 	SM1=1;
 	REN=1;
+	EA=1;
+	ES=1;
 }
 //设置WiFi打开端口号
 void wifiConfig()
@@ -142,24 +153,24 @@ void wifiConfig()
 	//液晶显示正在设置
 	lcdWriteCom(0x80+0x02);
 	lcdString(table1,10);
-	
-	printf("AT+CWMODE+1");
-	delayms(1000);
-	printf("AT+RST");
-	delayms(1000);
-	printf("AT+CWJAP=\"XXX\",\"XXX\"");		//此处为要连接的WIFI名称和密码
-	delayms(1000);
-	printf("AT+CIPMUX=1");
-	delayms(1000);
-	printf("AT+CIPSERVER=1,8080");
-	delayms(1000);
+	ES=0;
+	TI=1;
+	delayms(3000);
+
+	printf("AT+CIPMUX=1\r\n");
+	delayms(2000);
+	printf("AT+CIPSERVER=1,8080\r\n");
+	delayms(2000);
+	while(!TI);
+	TI=0;
+	ES=1;
 	//液晶显示设置成功
 	lcdWriteCom(0x01);
 	lcdWriteCom(0x80);
 	lcdString(table2,2);
 }
 //封装开关
-void wifiSwitch()
+/*void wifiSwitch()
 {
 	uchar a;
 	a=SBUF;
@@ -167,7 +178,7 @@ void wifiSwitch()
 		switchLight(1);
 	if(a=='2')
 		switchLight(2);
-}
+}*/
 /*液晶实时状态回显*/
 //液晶写命令
 void lcdWriteCom(uchar dat)
@@ -215,7 +226,7 @@ void lcdLight()
 	lcdString(table4,5);
 	lcdWriteCom(0x80+0x46);
 	if(adReadData()<200)
-		lcdString(table5,3);
+		lcdString(table5,4);
 	else
 		lcdString(table6,4);
 }
@@ -224,7 +235,7 @@ void lcdStatus()
 {
 	lcdWriteCom(0x80);
 	if(light==0)
-		lcdString(table7,2);
+		lcdString(table7,3);
 	if(light==1)
 		lcdString(table8,3);
 }
@@ -259,7 +270,17 @@ void main()
 		lcdStatus();
 		lcdLight();
 		keyControl();
-		wifiSwitch();
+	//	wifiSwitch();
 		modeConfig();
 	}
+}
+void wifi() interrupt 4
+{
+	uchar a;
+	a=SBUF;
+	if(a=='1')
+		switchLight(1);
+	if(a=='2')
+		switchLight(2);
+	RI=0;
 }

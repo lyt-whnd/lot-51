@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    08/05/2020  10:56:45  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    08/10/2020  07:18:30  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -37,32 +37,34 @@ LINK MAP OF MODULE:  .\Objects\main (?C_STARTUP)
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-            CODE    0003H     035CH     UNIT         ?PR?PRINTF?PRINTF
-            CODE    035FH     008EH     UNIT         ?C?LIB_CODE
-            CODE    03EDH     0075H     UNIT         ?PR?WIFICONFIG?MAIN
-            CODE    0462H     0073H     UNIT         ?CO?MAIN
-            CODE    04D5H     003CH     UNIT         ?PR?_LCDSTRING?MAIN
-            CODE    0511H     0035H     UNIT         ?PR?LCDLIGHT?MAIN
-            CODE    0546H     002FH     UNIT         ?PR?_DELAYMS?MAIN
-            CODE    0575H     002BH     UNIT         ?PR?KEYCONTROL?MAIN
-            CODE    05A0H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
-            CODE    05C7H     0026H     UNIT         ?PR?LCDSTATUS?MAIN
-            CODE    05EDH     0024H     UNIT         ?PR?ADREAD?MAIN
-            CODE    0611H     0024H     UNIT         ?PR?ADREADDATA?MAIN
-            CODE    0635H     0020H     UNIT         ?PR?_ADWRITE?MAIN
-            CODE    0655H     0020H     UNIT         ?PR?MAIN?MAIN
-            CODE    0675H     0019H     UNIT         ?PR?MODECONFIG?MAIN
-            CODE    068EH     0016H     UNIT         ?PR?ADSWITCH?MAIN
-            CODE    06A4H     0014H     UNIT         ?PR?LCDINIT?MAIN
-            CODE    06B8H     0013H     UNIT         ?PR?_SWITCHLIGHT?MAIN
-            CODE    06CBH     0013H     UNIT         ?PR?WIFISWITCH?MAIN
-            CODE    06DEH     0012H     UNIT         ?PR?WIFIINIT?MAIN
-            CODE    06F0H     000CH     UNIT         ?C_C51STARTUP
-            CODE    06FCH     0008H     UNIT         ?PR?_LCDWRITECOM?MAIN
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/05/2020  10:56:45  PAGE 2
+            CODE    0003H     001DH     UNIT         ?PR?ADSWITCH?MAIN
+                    0020H     0003H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     035CH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    0382H     008EH     UNIT         ?C?LIB_CODE
+            CODE    0410H     005BH     UNIT         ?PR?WIFICONFIG?MAIN
+            CODE    046BH     0051H     UNIT         ?CO?MAIN
+            CODE    04BCH     003EH     UNIT         ?PR?_LCDSTRING?MAIN
+            CODE    04FAH     0037H     UNIT         ?PR?LCDLIGHT?MAIN
+            CODE    0531H     0030H     UNIT         ?PR?WIFI?MAIN
+            CODE    0561H     002FH     UNIT         ?PR?_DELAYMS?MAIN
+            CODE    0590H     002BH     UNIT         ?PR?KEYCONTROL?MAIN
+            CODE    05BBH     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    05E2H     0026H     UNIT         ?PR?_ADWRITE?MAIN
+            CODE    0608H     0026H     UNIT         ?PR?ADREAD?MAIN
+            CODE    062EH     0024H     UNIT         ?PR?ADREADDATA?MAIN
+            CODE    0652H     001DH     UNIT         ?PR?MAIN?MAIN
+            CODE    066FH     001AH     UNIT         ?PR?LCDSTATUS?MAIN
+            CODE    0689H     0019H     UNIT         ?PR?MODECONFIG?MAIN
+            CODE    06A2H     0016H     UNIT         ?PR?WIFIINIT?MAIN
+            CODE    06B8H     0014H     UNIT         ?PR?LCDINIT?MAIN
+            CODE    06CCH     0013H     UNIT         ?PR?_SWITCHLIGHT?MAIN
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/10/2020  07:18:30  PAGE 2
 
 
-            CODE    0704H     0008H     UNIT         ?PR?_LCDWRITEDATA?MAIN
+            CODE    06DFH     000CH     UNIT         ?C_C51STARTUP
+            CODE    06EBH     0008H     UNIT         ?PR?_LCDWRITECOM?MAIN
+            CODE    06F3H     0008H     UNIT         ?PR?_LCDWRITEDATA?MAIN
 
 
 
@@ -82,7 +84,6 @@ SEGMENT                           BIT_GROUP          DATA_GROUP
   +--> ?PR?LCDSTATUS?MAIN
   +--> ?PR?LCDLIGHT?MAIN
   +--> ?PR?KEYCONTROL?MAIN
-  +--> ?PR?WIFISWITCH?MAIN
   +--> ?PR?MODECONFIG?MAIN
 
 ?PR?LCDINIT?MAIN               -----    -----      -----    -----
@@ -95,8 +96,8 @@ SEGMENT                           BIT_GROUP          DATA_GROUP
   +--> ?PR?_LCDWRITECOM?MAIN
   +--> ?CO?MAIN
   +--> ?PR?_LCDSTRING?MAIN
-  +--> ?PR?PRINTF?PRINTF
   +--> ?PR?_DELAYMS?MAIN
+  +--> ?PR?PRINTF?PRINTF
 
 ?PR?_LCDSTRING?MAIN            -----    -----      0008H    0007H
   +--> ?PR?_LCDWRITEDATA?MAIN
@@ -118,18 +119,15 @@ SEGMENT                           BIT_GROUP          DATA_GROUP
   +--> ?PR?_LCDSTRING?MAIN
   +--> ?PR?ADREADDATA?MAIN
 
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/10/2020  07:18:30  PAGE 3
+
+
 ?PR?ADREADDATA?MAIN            -----    -----      -----    -----
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/05/2020  10:56:45  PAGE 3
-
-
   +--> ?PR?_ADWRITE?MAIN
   +--> ?PR?ADREAD?MAIN
 
 ?PR?KEYCONTROL?MAIN            -----    -----      -----    -----
   +--> ?PR?_DELAYMS?MAIN
-  +--> ?PR?_SWITCHLIGHT?MAIN
-
-?PR?WIFISWITCH?MAIN            -----    -----      -----    -----
   +--> ?PR?_SWITCHLIGHT?MAIN
 
 ?PR?MODECONFIG?MAIN            -----    -----      -----    -----
@@ -138,6 +136,12 @@ SEGMENT                           BIT_GROUP          DATA_GROUP
 
 ?PR?ADSWITCH?MAIN              -----    -----      -----    -----
   +--> ?PR?ADREADDATA?MAIN
+  +--> ?PR?_SWITCHLIGHT?MAIN
+  +--> ?PR?_DELAYMS?MAIN
+
+*** NEW ROOT ***************************************************
+
+?PR?WIFI?MAIN                  -----    -----      -----    -----
   +--> ?PR?_SWITCHLIGHT?MAIN
 
 
@@ -148,7 +152,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\main (?C_STARTUP)
   ----------------------------------
 
   -------         MODULE        ?C_STARTUP
-  C:06F0H         SEGMENT       ?C_C51STARTUP
+  C:06DFH         SEGMENT       ?C_C51STARTUP
   I:0022H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
@@ -158,7 +162,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\main (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:06F3H         SYMBOL        IDATALOOP
+  C:06E2H         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
   N:0100H         SYMBOL        PBPSTACKTOP
   N:0000H         SYMBOL        PDATALEN
@@ -167,366 +171,381 @@ SYMBOL TABLE OF MODULE:  .\Objects\main (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:06F0H         SYMBOL        STARTUP1
+  C:06DFH         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         126
-  C:06F0H         LINE#         133
-  C:06F2H         LINE#         134
-  C:06F3H         LINE#         135
-  C:06F4H         LINE#         136
-  C:06F6H         LINE#         185
-  C:06F9H         LINE#         196
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/05/2020  10:56:45  PAGE 4
+  C:06DFH         LINE#         133
+  C:06E1H         LINE#         134
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/10/2020  07:18:30  PAGE 4
 
 
+  C:06E2H         LINE#         135
+  C:06E3H         LINE#         136
+  C:06E5H         LINE#         185
+  C:06E8H         LINE#         196
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        MAIN
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0080H         PUBLIC        P0
   D:0090H         PUBLIC        P1
-  C:0675H         PUBLIC        modeConfig
+  C:0689H         PUBLIC        modeConfig
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
   B:0090H.7       PUBLIC        S1
   B:0090H.3       PUBLIC        S2
-  C:03EDH         PUBLIC        wifiConfig
+  B:00A8H.7       PUBLIC        EA
+  C:0410H         PUBLIC        wifiConfig
   D:00A8H         PUBLIC        IE
-  C:06B8H         PUBLIC        _switchLight
+  C:06CCH         PUBLIC        _switchLight
   B:00A0H.7       PUBLIC        EN
   B:00B0H.5       PUBLIC        CS
+  B:00A8H.4       PUBLIC        ES
   D:00B8H         PUBLIC        IP
   B:00A0H.1       PUBLIC        light
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
   B:00B0H.6       PUBLIC        DCLK
   B:00A0H.6       PUBLIC        RS
-  C:0655H         PUBLIC        main
+  C:0652H         PUBLIC        main
   B:00A0H.0       PUBLIC        mode
-  C:06CBH         PUBLIC        wifiSwitch
-  C:0511H         PUBLIC        lcdLight
-  C:04D9H         PUBLIC        _lcdString
-  C:0575H         PUBLIC        keyControl
+  C:04FAH         PUBLIC        lcdLight
+  C:04C2H         PUBLIC        _lcdString
+  C:0531H         PUBLIC        wifi
+  C:0590H         PUBLIC        keyControl
   D:0099H         PUBLIC        SBUF
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
-  C:068EH         PUBLIC        adSwitch
-  C:04AAH         PUBLIC        table1
-  C:05C7H         PUBLIC        lcdStatus
-  C:04B5H         PUBLIC        table2
+  C:0003H         PUBLIC        adSwitch
+  C:048FH         PUBLIC        table1
+  C:066FH         PUBLIC        lcdStatus
+  C:049AH         PUBLIC        table2
   B:00B0H.7       PUBLIC        DOUT
-  C:04B8H         PUBLIC        table3
-  C:04BFH         PUBLIC        table4
-  C:0704H         PUBLIC        _lcdWriteData
-  C:04C5H         PUBLIC        table5
-  C:0611H         PUBLIC        adReadData
-  C:04C9H         PUBLIC        table6
-  C:04CEH         PUBLIC        table7
-  C:04D1H         PUBLIC        table8
-  C:05EDH         PUBLIC        adRead
-  C:06DEH         PUBLIC        wifiInit
-  C:06A4H         PUBLIC        lcdInit
+  C:049DH         PUBLIC        table3
+  C:04A4H         PUBLIC        table4
+  C:06F3H         PUBLIC        _lcdWriteData
+  C:04AAH         PUBLIC        table5
+  C:062EH         PUBLIC        adReadData
+  C:04AFH         PUBLIC        table6
+  C:04B4H         PUBLIC        table7
+  C:04B8H         PUBLIC        table8
+  C:0608H         PUBLIC        adRead
+  C:06A2H         PUBLIC        wifiInit
+  C:06B8H         PUBLIC        lcdInit
   D:008DH         PUBLIC        TH1
   B:0098H.7       PUBLIC        SM0
   B:0098H.6       PUBLIC        SM1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/10/2020  07:18:30  PAGE 5
+
+
   D:008BH         PUBLIC        TL1
-  C:0635H         PUBLIC        _adWrite
+  C:05E2H         PUBLIC        _adWrite
   B:0088H.6       PUBLIC        TR1
   B:00B0H.4       PUBLIC        DIN
   B:00A0H.5       PUBLIC        lcdWR
-  C:06FCH         PUBLIC        _lcdWriteCom
+  C:06EBH         PUBLIC        _lcdWriteCom
   B:0098H.4       PUBLIC        REN
   D:00C8H         PUBLIC        T2CON
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/05/2020  10:56:45  PAGE 5
-
-
-  C:0557H         PUBLIC        _delayms
+  C:0572H         PUBLIC        _delayms
   D:00D0H         PUBLIC        PSW
   B:00B0H.2       PUBLIC        key1
   B:00B0H.3       PUBLIC        key2
-  -------         PROC          L?0070
-  -------         ENDPROC       L?0070
+  -------         PROC          L?0072
+  -------         ENDPROC       L?0072
   -------         PROC          _DELAYMS
   D:0006H         SYMBOL        z
   -------         DO            
   D:0006H         SYMBOL        i
   D:0004H         SYMBOL        j
   -------         ENDDO         
-  C:0557H         LINE#         33
-  C:0557H         LINE#         34
-  C:0557H         LINE#         36
-  C:0560H         LINE#         37
-  C:0574H         LINE#         38
+  C:0572H         LINE#         33
+  C:0572H         LINE#         34
+  C:0572H         LINE#         36
+  C:057BH         LINE#         37
+  C:058FH         LINE#         38
   -------         ENDPROC       _DELAYMS
   -------         PROC          _SWITCHLIGHT
   D:0007H         SYMBOL        i
-  C:06B8H         LINE#         40
-  C:06B8H         LINE#         41
-  C:06B8H         LINE#         42
-  C:06C0H         LINE#         43
-  C:06C2H         LINE#         44
-  C:06C8H         LINE#         45
-  C:06CAH         LINE#         46
+  C:06CCH         LINE#         40
+  C:06CCH         LINE#         41
+  C:06CCH         LINE#         42
+  C:06D4H         LINE#         43
+  C:06D6H         LINE#         44
+  C:06DCH         LINE#         45
+  C:06DEH         LINE#         46
   -------         ENDPROC       _SWITCHLIGHT
   -------         PROC          KEYCONTROL
-  C:0575H         LINE#         48
-  C:0575H         LINE#         49
-  C:0575H         LINE#         50
-  C:0578H         LINE#         51
-  C:0578H         LINE#         52
-  C:057FH         LINE#         53
-  C:0582H         LINE#         54
-  C:0582H         LINE#         55
-  C:0587H         LINE#         56
-  C:0587H         LINE#         57
-  C:058AH         LINE#         58
-  C:058AH         LINE#         59
-  C:058DH         LINE#         60
-  C:058DH         LINE#         61
-  C:0594H         LINE#         62
-  C:0597H         LINE#         63
-  C:0597H         LINE#         64
-  C:059CH         LINE#         65
-  C:059CH         LINE#         66
-  C:059FH         LINE#         67
-  C:059FH         LINE#         68
+  C:0590H         LINE#         48
+  C:0590H         LINE#         49
+  C:0590H         LINE#         50
+  C:0593H         LINE#         51
+  C:0593H         LINE#         52
+  C:059AH         LINE#         53
+  C:059DH         LINE#         54
+  C:059DH         LINE#         55
+  C:05A2H         LINE#         56
+  C:05A2H         LINE#         57
+  C:05A5H         LINE#         58
+  C:05A5H         LINE#         59
+  C:05A8H         LINE#         60
+  C:05A8H         LINE#         61
+  C:05AFH         LINE#         62
+  C:05B2H         LINE#         63
+  C:05B2H         LINE#         64
+  C:05B7H         LINE#         65
+  C:05B7H         LINE#         66
+  C:05BAH         LINE#         67
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/10/2020  07:18:30  PAGE 6
+
+
+  C:05BAH         LINE#         68
   -------         ENDPROC       KEYCONTROL
   -------         PROC          _ADWRITE
   D:0007H         SYMBOL        dat
   -------         DO            
   D:0002H         SYMBOL        i
   -------         ENDDO         
-  C:0635H         LINE#         72
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/05/2020  10:56:45  PAGE 6
-
-
-  C:0635H         LINE#         73
-  C:0635H         LINE#         75
-  C:0637H         LINE#         76
-  C:0639H         LINE#         77
-  C:063CH         LINE#         78
-  C:063CH         LINE#         79
-  C:0641H         LINE#         80
-  C:0645H         LINE#         81
-  C:0647H         LINE#         83
-  C:0649H         LINE#         84
-  C:0654H         LINE#         85
+  C:05E2H         LINE#         72
+  C:05E2H         LINE#         73
+  C:05E2H         LINE#         75
+  C:05E4H         LINE#         76
+  C:05E6H         LINE#         77
+  C:05E9H         LINE#         78
+  C:05E9H         LINE#         79
+  C:05F4H         LINE#         80
+  C:05F8H         LINE#         81
+  C:05FAH         LINE#         83
+  C:05FCH         LINE#         84
+  C:0607H         LINE#         85
   -------         ENDPROC       _ADWRITE
   -------         PROC          ADREAD
   -------         DO            
   D:0004H         SYMBOL        i
   D:0006H         SYMBOL        dat
   -------         ENDDO         
-  C:05EDH         LINE#         87
-  C:05EDH         LINE#         88
-  C:05EDH         LINE#         89
-  C:05F0H         LINE#         90
-  C:05F2H         LINE#         91
-  C:05F4H         LINE#         92
-  C:05F4H         LINE#         93
-  C:05F6H         LINE#         94
-  C:05FDH         LINE#         95
-  C:0603H         LINE#         96
-  C:0605H         LINE#         97
-  C:0610H         LINE#         98
-  C:0610H         LINE#         99
+  C:0608H         LINE#         87
+  C:0608H         LINE#         88
+  C:0608H         LINE#         89
+  C:060BH         LINE#         90
+  C:060DH         LINE#         91
+  C:060FH         LINE#         92
+  C:0611H         LINE#         93
+  C:0611H         LINE#         95
+  C:0618H         LINE#         96
+  C:061AH         LINE#         97
+  C:061CH         LINE#         98
+  C:0622H         LINE#         100
+  C:062DH         LINE#         101
+  C:062DH         LINE#         102
   -------         ENDPROC       ADREAD
   -------         PROC          ADREADDATA
   -------         DO            
   D:0006H         SYMBOL        i
   D:0006H         SYMBOL        AD_value
   -------         ENDDO         
-  C:0611H         LINE#         101
-  C:0611H         LINE#         102
-  C:0611H         LINE#         104
-  C:0613H         LINE#         105
-  C:0615H         LINE#         106
-  C:061AH         LINE#         107
-  C:0627H         LINE#         108
-  C:0629H         LINE#         109
-  C:062AH         LINE#         110
-  C:062BH         LINE#         111
-  C:062DH         LINE#         112
-  C:062EH         LINE#         113
-  C:062FH         LINE#         114
-  C:0632H         LINE#         115
-  C:0634H         LINE#         116
-  C:0634H         LINE#         117
+  C:062EH         LINE#         104
+  C:062EH         LINE#         105
+  C:062EH         LINE#         107
+  C:0630H         LINE#         108
+  C:0632H         LINE#         109
+  C:0637H         LINE#         110
+  C:0644H         LINE#         111
+  C:0646H         LINE#         112
+  C:0647H         LINE#         113
+  C:0648H         LINE#         114
+  C:064AH         LINE#         115
+  C:064BH         LINE#         116
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/10/2020  07:18:30  PAGE 7
+
+
+  C:064CH         LINE#         117
+  C:064FH         LINE#         118
+  C:0651H         LINE#         119
+  C:0651H         LINE#         120
   -------         ENDPROC       ADREADDATA
   -------         PROC          ADSWITCH
-  C:068EH         LINE#         119
-  C:068EH         LINE#         120
-  C:068EH         LINE#         121
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/05/2020  10:56:45  PAGE 7
-
-
-  C:069AH         LINE#         122
-  C:069EH         LINE#         124
-  C:06A3H         LINE#         125
+  C:0003H         LINE#         122
+  C:0003H         LINE#         123
+  C:0003H         LINE#         124
+  C:000FH         LINE#         125
+  C:000FH         LINE#         126
+  C:0011H         LINE#         127
+  C:0011H         LINE#         128
+  C:0013H         LINE#         130
+  C:0013H         LINE#         131
+  C:0018H         LINE#         132
+  C:001FH         LINE#         133
+  C:001FH         LINE#         134
   -------         ENDPROC       ADSWITCH
   -------         PROC          WIFIINIT
-  C:06DEH         LINE#         129
-  C:06DEH         LINE#         130
-  C:06DEH         LINE#         131
-  C:06E1H         LINE#         132
-  C:06E4H         LINE#         133
-  C:06E7H         LINE#         134
-  C:06E9H         LINE#         135
-  C:06EBH         LINE#         136
-  C:06EDH         LINE#         137
-  C:06EFH         LINE#         138
+  C:06A2H         LINE#         138
+  C:06A2H         LINE#         139
+  C:06A2H         LINE#         140
+  C:06A5H         LINE#         141
+  C:06A8H         LINE#         142
+  C:06ABH         LINE#         143
+  C:06ADH         LINE#         144
+  C:06AFH         LINE#         145
+  C:06B1H         LINE#         146
+  C:06B3H         LINE#         147
+  C:06B5H         LINE#         148
+  C:06B7H         LINE#         149
   -------         ENDPROC       WIFIINIT
   -------         PROC          WIFICONFIG
-  C:03EDH         LINE#         140
-  C:03EDH         LINE#         141
-  C:03EDH         LINE#         143
-  C:03F2H         LINE#         144
-  C:03FBH         LINE#         146
-  C:0404H         LINE#         147
-  C:040BH         LINE#         148
-  C:0414H         LINE#         149
-  C:041BH         LINE#         150
-  C:0424H         LINE#         151
-  C:042BH         LINE#         152
-  C:0434H         LINE#         153
-  C:043BH         LINE#         154
-  C:0444H         LINE#         155
-  C:044BH         LINE#         157
-  C:0450H         LINE#         158
-  C:0455H         LINE#         159
+  C:0410H         LINE#         151
+  C:0410H         LINE#         152
+  C:0410H         LINE#         154
+  C:0415H         LINE#         155
+  C:0422H         LINE#         156
+  C:0424H         LINE#         157
+  C:0426H         LINE#         158
+  C:042DH         LINE#         160
+  C:0436H         LINE#         161
+  C:043DH         LINE#         162
+  C:0446H         LINE#         163
+  C:044DH         LINE#         164
+  C:0450H         LINE#         165
+  C:0452H         LINE#         166
+  C:0454H         LINE#         168
+  C:0459H         LINE#         169
+  C:045EH         LINE#         170
   -------         ENDPROC       WIFICONFIG
-  -------         PROC          WIFISWITCH
-  -------         DO            
-  D:0006H         SYMBOL        a
-  -------         ENDDO         
-  C:06CBH         LINE#         162
-  C:06CBH         LINE#         163
-  C:06CBH         LINE#         165
-  C:06CDH         LINE#         166
-  C:06D0H         LINE#         167
-  C:06D5H         LINE#         168
-  C:06D8H         LINE#         169
-  C:06DDH         LINE#         170
-  -------         ENDPROC       WIFISWITCH
   -------         PROC          _LCDWRITECOM
   D:0007H         SYMBOL        dat
-  C:06FCH         LINE#         173
-  C:06FCH         LINE#         174
-  C:06FCH         LINE#         175
-  C:06FEH         LINE#         176
-  C:06FEH         LINE#         177
-  C:06FEH         LINE#         178
-  C:06FEH         LINE#         179
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/05/2020  10:56:45  PAGE 8
+  C:06EBH         LINE#         184
+  C:06EBH         LINE#         185
+  C:06EBH         LINE#         186
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/10/2020  07:18:30  PAGE 8
 
 
-  C:06FEH         LINE#         180
-  C:0701H         LINE#         181
-  C:0703H         LINE#         182
+  C:06EDH         LINE#         187
+  C:06EDH         LINE#         188
+  C:06EDH         LINE#         189
+  C:06EDH         LINE#         190
+  C:06EDH         LINE#         191
+  C:06F0H         LINE#         192
+  C:06F2H         LINE#         193
   -------         ENDPROC       _LCDWRITECOM
   -------         PROC          _LCDWRITEDATA
   D:0007H         SYMBOL        dat
-  C:0704H         LINE#         184
-  C:0704H         LINE#         185
-  C:0704H         LINE#         186
-  C:0706H         LINE#         187
-  C:0706H         LINE#         188
-  C:0706H         LINE#         189
-  C:0706H         LINE#         190
-  C:0706H         LINE#         191
-  C:0709H         LINE#         192
-  C:070BH         LINE#         193
+  C:06F3H         LINE#         195
+  C:06F3H         LINE#         196
+  C:06F3H         LINE#         197
+  C:06F5H         LINE#         198
+  C:06F5H         LINE#         199
+  C:06F5H         LINE#         200
+  C:06F5H         LINE#         201
+  C:06F5H         LINE#         202
+  C:06F8H         LINE#         203
+  C:06FAH         LINE#         204
   -------         ENDPROC       _LCDWRITEDATA
   -------         PROC          LCDINIT
-  C:06A4H         LINE#         195
-  C:06A4H         LINE#         196
-  C:06A4H         LINE#         197
-  C:06A9H         LINE#         198
-  C:06AEH         LINE#         199
-  C:06B3H         LINE#         200
+  C:06B8H         LINE#         206
+  C:06B8H         LINE#         207
+  C:06B8H         LINE#         208
+  C:06BDH         LINE#         209
+  C:06C2H         LINE#         210
+  C:06C7H         LINE#         211
   -------         ENDPROC       LCDINIT
-  -------         PROC          L?0071
-  -------         ENDPROC       L?0071
+  -------         PROC          L?0073
+  -------         ENDPROC       L?0073
   -------         PROC          _LCDSTRING
   D:0008H         SYMBOL        str
   D:000BH         SYMBOL        length
   -------         DO            
   D:000DH         SYMBOL        i
   -------         ENDDO         
-  C:04D9H         LINE#         203
-  C:04E3H         LINE#         204
-  C:04E3H         LINE#         206
-  C:04F3H         LINE#         207
-  C:04F3H         LINE#         208
-  C:0506H         LINE#         209
-  C:0510H         LINE#         210
+  C:04C2H         LINE#         214
+  C:04CCH         LINE#         215
+  C:04CCH         LINE#         217
+  C:04DCH         LINE#         218
+  C:04DCH         LINE#         219
+  C:04EFH         LINE#         220
+  C:04F9H         LINE#         221
   -------         ENDPROC       _LCDSTRING
   -------         PROC          LCDLIGHT
-  C:0511H         LINE#         212
-  C:0511H         LINE#         213
-  C:0511H         LINE#         214
-  C:0516H         LINE#         215
-  C:051FH         LINE#         216
-  C:0524H         LINE#         217
-  C:0532H         LINE#         218
-  C:053AH         LINE#         220
-  C:0545H         LINE#         221
+  C:04FAH         LINE#         223
+  C:04FAH         LINE#         224
+  C:04FAH         LINE#         225
+  C:04FFH         LINE#         226
+  C:050CH         LINE#         227
+  C:0511H         LINE#         228
+  C:051FH         LINE#         229
+  C:0525H         LINE#         231
+  C:0530H         LINE#         232
   -------         ENDPROC       LCDLIGHT
   -------         PROC          LCDSTATUS
-  C:05C7H         LINE#         223
-  C:05C7H         LINE#         224
-  C:05C7H         LINE#         225
-  C:05CCH         LINE#         226
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/05/2020  10:56:45  PAGE 9
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/10/2020  07:18:30  PAGE 9
 
 
-  C:05CFH         LINE#         227
-  C:05DCH         LINE#         228
-  C:05DFH         LINE#         229
-  C:05ECH         LINE#         230
+  C:066FH         LINE#         234
+  C:066FH         LINE#         235
+  C:066FH         LINE#         236
+  C:0674H         LINE#         237
+  C:0677H         LINE#         238
+  C:067EH         LINE#         239
+  C:0681H         LINE#         240
+  C:0688H         LINE#         241
   -------         ENDPROC       LCDSTATUS
   -------         PROC          MODECONFIG
-  C:0675H         LINE#         232
-  C:0675H         LINE#         233
-  C:0675H         LINE#         234
-  C:0678H         LINE#         235
-  C:0678H         LINE#         236
-  C:067FH         LINE#         237
-  C:0682H         LINE#         238
-  C:0682H         LINE#         239
-  C:0684H         LINE#         240
-  C:0684H         LINE#         241
-  C:0687H         LINE#         242
-  C:0687H         LINE#         243
-  C:068AH         LINE#         244
-  C:068AH         LINE#         245
-  C:068DH         LINE#         246
-  C:068DH         LINE#         247
+  C:0689H         LINE#         243
+  C:0689H         LINE#         244
+  C:0689H         LINE#         245
+  C:068CH         LINE#         246
+  C:068CH         LINE#         247
+  C:0693H         LINE#         248
+  C:0696H         LINE#         249
+  C:0696H         LINE#         250
+  C:0698H         LINE#         251
+  C:0698H         LINE#         252
+  C:069BH         LINE#         253
+  C:069BH         LINE#         254
+  C:069EH         LINE#         255
+  C:069EH         LINE#         256
+  C:06A1H         LINE#         257
+  C:06A1H         LINE#         258
   -------         ENDPROC       MODECONFIG
   -------         PROC          MAIN
-  C:0655H         LINE#         249
-  C:0655H         LINE#         250
-  C:0655H         LINE#         251
-  C:0658H         LINE#         252
-  C:065BH         LINE#         253
-  C:065EH         LINE#         254
-  C:0660H         LINE#         255
-  C:0662H         LINE#         256
-  C:0664H         LINE#         257
-  C:0664H         LINE#         258
-  C:0664H         LINE#         259
-  C:0667H         LINE#         260
-  C:066AH         LINE#         261
-  C:066DH         LINE#         262
-  C:0670H         LINE#         263
-  C:0673H         LINE#         264
+  C:0652H         LINE#         260
+  C:0652H         LINE#         261
+  C:0652H         LINE#         262
+  C:0655H         LINE#         263
+  C:0658H         LINE#         264
+  C:065BH         LINE#         265
+  C:065DH         LINE#         266
+  C:065FH         LINE#         267
+  C:0661H         LINE#         268
+  C:0661H         LINE#         269
+  C:0661H         LINE#         270
+  C:0664H         LINE#         271
+  C:0667H         LINE#         272
+  C:066AH         LINE#         274
+  C:066DH         LINE#         275
   -------         ENDPROC       MAIN
+  -------         PROC          WIFI
+  -------         DO            
+  D:0006H         SYMBOL        a
+  -------         ENDDO         
+  C:0531H         LINE#         277
+  C:0540H         LINE#         280
+  C:0542H         LINE#         281
+  C:0545H         LINE#         282
+  C:054AH         LINE#         283
+  C:054DH         LINE#         284
+  C:0552H         LINE#         285
+  C:0554H         LINE#         286
+  -------         ENDPROC       WIFI
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/10/2020  07:18:30  PAGE 10
+
+
   -------         ENDMOD        MAIN
 
   -------         MODULE        ?C?CLDOPTR
-  C:035FH         PUBLIC        ?C?CLDOPTR
+  C:0382H         PUBLIC        ?C?CLDOPTR
   -------         ENDMOD        ?C?CLDOPTR
 
   -------         MODULE        PRINTF
@@ -534,34 +553,31 @@ SYMBOL TABLE OF MODULE:  .\Objects\main (?C_STARTUP)
   D:0008H         PUBLIC        ?_PRINTF?BYTE
   D:0008H         PUBLIC        ?_SPRINTF517?BYTE
   D:0008H         PUBLIC        ?_SPRINTF?BYTE
-  C:0065H         PUBLIC        _PRINTF
-  C:0065H         PUBLIC        _PRINTF517
-  C:005FH         PUBLIC        _SPRINTF
-  C:005FH         PUBLIC        _SPRINTF517
+  C:0088H         PUBLIC        _PRINTF
+  C:0088H         PUBLIC        _PRINTF517
+  C:0082H         PUBLIC        _SPRINTF
+  C:0082H         PUBLIC        _SPRINTF517
   -------         ENDMOD        PRINTF
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/05/2020  10:56:45  PAGE 10
-
-
 
   -------         MODULE        ?C?CLDPTR
-  C:038CH         PUBLIC        ?C?CLDPTR
+  C:03AFH         PUBLIC        ?C?CLDPTR
   -------         ENDMOD        ?C?CLDPTR
 
   -------         MODULE        ?C?CSTPTR
-  C:03A5H         PUBLIC        ?C?CSTPTR
+  C:03C8H         PUBLIC        ?C?CSTPTR
   -------         ENDMOD        ?C?CSTPTR
 
   -------         MODULE        ?C?PLDIIDATA
-  C:03B7H         PUBLIC        ?C?PLDIIDATA
+  C:03DAH         PUBLIC        ?C?PLDIIDATA
   -------         ENDMOD        ?C?PLDIIDATA
 
   -------         MODULE        ?C?CCASE
-  C:03C7H         PUBLIC        ?C?CCASE
+  C:03EAH         PUBLIC        ?C?CCASE
   -------         ENDMOD        ?C?CCASE
 
   -------         MODULE        PUTCHAR
-  C:05A0H         PUBLIC        _PUTCHAR
+  C:05BBH         PUBLIC        _PUTCHAR
   -------         ENDMOD        PUTCHAR
 
-Program Size: data=30.1 xdata=0 code=1804
+Program Size: data=30.1 xdata=0 code=1784
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
